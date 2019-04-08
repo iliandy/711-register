@@ -2,47 +2,40 @@ import React from "react"
 import { Formik, Form, Field } from "formik"
 import * as Yup from "yup"
 
-const SignupSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  lastName: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
+const schema = Yup.object().shape({
+  firstName: Yup.string().required("Required"),
+  lastName: Yup.string().required("Required"),
   email: Yup.string()
     .email("Invalid email")
     .required("Required"),
 })
 
+const initialValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+}
+
 const App = () => (
   <div>
-    <h1>Signup</h1>
+    <h1>Register</h1>
     <Formik
-      initialValues={{
-        firstName: "",
-        lastName: "",
-        email: "",
-      }}
-      validationSchema={SignupSchema}
+      initialValues={initialValues}
+      validationSchema={schema}
       onSubmit={(values) => {
-        // same shape as initial values
         console.log(values)
       }}
     >
       {({ errors, touched }) => (
         <Form>
           <Field name="firstName" />
-          {errors.firstName && touched.firstName ? (
+          {errors.firstName && touched.firstName && (
             <div>{errors.firstName}</div>
-          ) : null}
+          )}
           <Field name="lastName" />
-          {errors.lastName && touched.lastName ? (
-            <div>{errors.lastName}</div>
-          ) : null}
+          {errors.lastName && touched.lastName && <div>{errors.lastName}</div>}
           <Field name="email" type="email" />
-          {errors.email && touched.email ? <div>{errors.email}</div> : null}
+          {errors.email && touched.email && <div>{errors.email}</div>}
           <button type="submit">Submit</button>
         </Form>
       )}

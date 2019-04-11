@@ -20,7 +20,7 @@ const schema = Yup.object().shape({
   birthDay: Yup.number().required("Birth Day is required"),
   birthYear: Yup.number().required("Birth Year is required"),
   phone: Yup.number().typeError("Invalid phone number"),
-  // country: Yup.string().required("Country is required"),
+  country: Yup.string().required("Country is required"),
   zip: Yup.number().required("Zip code is required"),
   terms: Yup.boolean().oneOf(
     [true],
@@ -173,7 +173,6 @@ const App = () => (
               <Form.Group as={Col} md="4" controlId="validationFormikBirthMon">
                 <Form.Control
                   as="select"
-                  id="birthMon"
                   name="birthMon"
                   value={values.birthMon}
                   onBlur={handleBlur}
@@ -181,11 +180,13 @@ const App = () => (
                   isValid={touched.birthMon && !errors.birthMon}
                   isInvalid={errors.birthMon}
                 >
-                  <option value="" selected disabled hidden>
+                  <option value="" defaultValue disabled hidden>
                     Select Month
                   </option>
                   {birthMonths.map((month, index) => (
-                    <option value={index}>{month}</option>
+                    <option key={month} value={index}>
+                      {month}
+                    </option>
                   ))}
                 </Form.Control>
                 {errors.birthMon && touched.birthMon && (
@@ -202,11 +203,13 @@ const App = () => (
                   isValid={touched.birthDay && !errors.birthDay}
                   isInvalid={errors.birthDay}
                 >
-                  <option value="" selected disabled hidden>
+                  <option value="" defaultValue disabled hidden>
                     Select Day
                   </option>
                   {birthDays.map((day) => (
-                    <option value={day}>{day}</option>
+                    <option key={day} value={day}>
+                      {day}
+                    </option>
                   ))}
                 </Form.Control>
                 {errors.birthDay && touched.birthDay && (
@@ -223,11 +226,13 @@ const App = () => (
                   isValid={touched.birthYear && !errors.birthYear}
                   isInvalid={errors.birthYear}
                 >
-                  <option value="" selected disabled hidden>
+                  <option value="" defaultValue disabled hidden>
                     Select Year
                   </option>
                   {birthYears.map((year) => (
-                    <option value={year}>{year}</option>
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
                   ))}
                 </Form.Control>
                 {errors.birthYear && touched.birthYear && (
@@ -249,12 +254,12 @@ const App = () => (
               />
               {errors.phone && touched.phone && <div>{errors.phone}</div>}
             </Form.Group>
-            {/* <Form.Group controlId="country">
+            <Form.Group controlId="validationFormikCountry">
               <Form.Label>Country *</Form.Label>
               <Form.Row>
                 <Form.Check
                   type="radio"
-                  name={values.country}
+                  name="country"
                   value="usa"
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -264,7 +269,7 @@ const App = () => (
                 <span>usa img</span>
                 <Form.Check
                   type="radio"
-                  name={values.country}
+                  name="country"
                   value="can"
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -274,7 +279,7 @@ const App = () => (
                 <span>can img</span>
               </Form.Row>
               {errors.country && touched.country && <div>{errors.country}</div>}
-            </Form.Group> */}
+            </Form.Group>
             <Form.Group controlId="validationFormikZip">
               <Form.Label>Zip/Postal Code *</Form.Label>
               <Form.Control
@@ -321,7 +326,6 @@ const App = () => (
                   Yes, I'd like to receive news and special offers
                 </Form.Label>
               </Form.Row>
-              {/* {errors.offers && touched.offers && <div>{errors.offers}</div>} */}
             </Form.Group>
             <Button
               variant="info"

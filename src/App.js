@@ -67,7 +67,7 @@ const birthYears = Array(100)
   .map((x, y) => x + y)
 
 const App = () => (
-  <div>
+  <div class="container">
     <h1>Register</h1>
     <Formik
       initialValues={initialValues}
